@@ -23,7 +23,7 @@ function Header({ loggedIn, email, signOut }) {
     if (loggedIn) {
       return (
         <>
-          <p className="header__mail">{email}</p>
+          <p className="header__email">{email}</p>
           <button
             to="/sign-in"
             className="header__link header__link_logged-in"
@@ -41,7 +41,7 @@ function Header({ loggedIn, email, signOut }) {
   return (
     <header className="header">
       <img className="logo header__logo" src={headerLogo} alt="Логотип" />
-      <div className="header__link-wrapper">{link()}</div>
+      <div className="header__user-area">{link()}</div>
     </header>
   );
 }
