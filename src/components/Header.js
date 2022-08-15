@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import headerLogo from "../images/logo-white.svg";
 
