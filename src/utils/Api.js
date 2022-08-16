@@ -29,7 +29,7 @@ class Api {
 
   sendProfileInfo(setName, setAbout) {
     return fetch(`${this.url}/users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({
         name: setName,
@@ -42,7 +42,7 @@ class Api {
 
   sendProfilePhoto(setPhoto) {
     return fetch(`${this.url}/users/me/avatar`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({
         avatar: setPhoto,
@@ -54,7 +54,7 @@ class Api {
 
   postNewCard({ name, link }) {
     return fetch(`${this.url}/cards`, {
-      method: "POST",
+      method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
         name: name,
@@ -67,7 +67,7 @@ class Api {
 
   deleteCard(id) {
     return fetch(`${this.url}/cards/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: this.headers,
     }).then((res) => {
       return this._getResponseData(res);
@@ -76,7 +76,7 @@ class Api {
 
   likeCard(id) {
     return fetch(`${this.url}/cards/${id}/likes`, {
-      method: "PUT",
+      method: 'PUT',
       headers: this.headers,
     }).then((res) => {
       return this._getResponseData(res);
@@ -85,7 +85,7 @@ class Api {
 
   deleteLikeCard(id) {
     return fetch(`${this.url}/cards/${id}/likes`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: this.headers,
     }).then((res) => {
       return this._getResponseData(res);

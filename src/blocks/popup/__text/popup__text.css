@@ -9,3 +9,14 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
 }
+
+/* .popup__text:first-of-type {
+    margin-top: 54px;
+    margin-bottom: 30px;
+} */
+
+/* @media (max-width: 730px) { 
+  .popup__text:first-of-type {
+    margin-top: 75px;
+}
+} */

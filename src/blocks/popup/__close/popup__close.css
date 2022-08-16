@@ -12,7 +12,7 @@
 .popup__close:hover {
   opacity: 0.6;
 }
-@media (max-width: 767.98px) {
+@media (max-width: 730px) {
   .popup__close {
     top: -35px;
     right: -5px;

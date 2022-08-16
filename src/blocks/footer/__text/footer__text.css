@@ -5,7 +5,7 @@
   color: #545454;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 730px) {
   .footer__text {
     font-size: 14px;
     line-height: 17px;

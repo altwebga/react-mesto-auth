@@ -1,13 +1,13 @@
-import React from "react";
-import { Link, withRouter } from "react-router-dom";
-import * as auth from "../utils/auth";
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import * as auth from '../utils/auth';
 
 class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,11 +27,11 @@ class Register extends React.Component {
     }
     auth.register(this.state.email, this.state.password).then((res) => {
       if (res.error || res.statusCode === 400) {
-        this.props.setIsRegisterDone(false);
+        this.props.setIsRegisterSuccess(false);
         this.props.onOpen();
         return;
       }
-      this.props.setIsRegisterDone(true);
+      this.props.setIsRegisterSuccess(true);
       this.props.onOpen();
     });
   };
@@ -59,11 +59,7 @@ class Register extends React.Component {
             className="register__form-input"
           />
           <div className="register__button-container">
-            <button
-              type="submit"
-              onSubmit={this.handleSubmit}
-              className="register__link"
-            >
+            <button type="submit" onSubmit={this.handleSubmit} className="register__link">
               Зарегистрироваться
             </button>
           </div>
@@ -71,7 +67,7 @@ class Register extends React.Component {
 
         <div className="register__signin">
           <p className="register__signin-text">
-            Уже зарегистрированы?{" "}
+            Уже зарегистрированы?{' '}
             <Link to="/sign-in" className="register__login-link">
               Войти
             </Link>

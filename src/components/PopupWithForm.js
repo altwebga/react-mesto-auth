@@ -14,7 +14,6 @@ function PopupWithForm({
       <div className="popup__container">
         <button type="button" className="popup__close" onClick={onClose} />
         <form
-          noValidate
           name={`${name}`}
           action="#"
           className={`popup__form popup__form_change-${name}`}
