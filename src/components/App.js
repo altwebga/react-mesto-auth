@@ -15,6 +15,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Register from './Register';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
+import avatarDefault from "../images/сousteau-min.jpg";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -27,9 +28,9 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [userEmail, setUserEmail] = useState('');
   const [currentUser, setCurrentUser] = useState({
-    userName: 'Жак Фреско',
-    userDescription: 'Ладно',
-    userAvatar: 'https://i.pinimg.com/originals/25/88/a5/2588a573f8801981e4c0a902a980284b.jpg',
+    userName: "Жак-Ив Кусто",
+    userDescription: "Исследователь океана",
+    userAvatar: avatarDefault,
   });
   const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
