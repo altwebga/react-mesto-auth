@@ -1,13 +1,12 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import * as auth from '../utils/auth';
+import React from "react";
+import { withRouter } from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,22 +24,11 @@ class Login extends React.Component {
     if (!this.state.email || !this.state.password) {
       return;
     }
-    auth
-      .authorize(this.state.email, this.state.password)
-      .then((data) => {
-        if (data === undefined) {
-          this.props.setIsLoginDone(false);
-          this.props.onOpen();
-        }
-        if (data.token) {
-          this.props.setUserEmail(this.state.email);
-          this.setState({ email: '', password: '' }, () => {
-            this.props.handleLogin();
-            this.props.history.push('/');
-          });
-        }
-      })
-      .catch((err) => console.log(err));
+    this.props.onSubmit({
+      email: this.state.email,
+      password: this.state.password,
+      clearInputs: () => this.setState({ email: "", password: "" }),
+    });
   }
   render() {
     return (
@@ -66,7 +54,11 @@ class Login extends React.Component {
             className="login__form-input"
           />
           <div className="login__button-container">
-            <button type="submit" onSubmit={this.handleSubmit} className="login__link">
+            <button
+              type="submit"
+              onSubmit={this.handleSubmit}
+              className="login__link"
+            >
               Войти
             </button>
           </div>
