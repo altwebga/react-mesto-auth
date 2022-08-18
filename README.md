@@ -37,4 +37,4 @@ npm run start
 
 ## Демо
 
-[Mesto-SPA на GitHub Pages](https://github.com/altwebga/mesto-react.git)
+[Mesto-SPA на GitHub Pages](https://altwebga.github.io/react-mesto-auth/)
