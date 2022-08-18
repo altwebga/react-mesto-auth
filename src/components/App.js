@@ -68,10 +68,6 @@ function App() {
     }
   }, [loggedIn]);
 
-  /*  useEffect(() => {
- 
-  }, []); */
-
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
@@ -226,8 +222,7 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck();
-    // eslint-disable-next-line
-  }, []);
+   }, []);
 
   function handleLogin() {
     setLoggedIn(true);
