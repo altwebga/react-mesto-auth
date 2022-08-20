@@ -30,13 +30,13 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
-  const [isSuccess, setIsSuccess] = useState();
+  const [isSuccessTooltipStatus, setIsSuccessTooltipStatus] = useState();
   const [selectedCard, setSelectedCard] = useState({});
   const [userEmail, setUserEmail] = useState("");
   const [currentUser, setCurrentUser] = useState({
     userName: "Жак-Ив Кусто",
     userDescription: "Исследователь океана",
-    userAvatar: avatarDefault
+    userAvatar: avatarDefault,
   });
   const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
@@ -69,15 +69,15 @@ function App() {
   }, [loggedIn]);
 
   function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+    setIsEditAvatarPopupOpen(true);
   }
 
   function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+    setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
+    setIsAddPlacePopupOpen(true);
   }
 
   function handleCardClick({ name, link }) {
@@ -175,12 +175,12 @@ function App() {
     auth
       .register(email, password)
       .then((res) => {
-        setIsSuccess(true);
+        setIsSuccessTooltipStatus(true);
         openInfoTooltip();
         history.push("/sign-in");
       })
       .catch((err) => {
-        setIsSuccess(false);
+        setIsSuccessTooltipStatus(false);
         openInfoTooltip();
         console.log(err);
       });
@@ -198,15 +198,15 @@ function App() {
         }
       })
       .catch((err) => {
-        setIsSuccess(false);
+        setIsSuccessTooltipStatus(false);
         openInfoTooltip();
         console.log(err);
       });
   }
 
   function handleTokenCheck() {
-    if (localStorage.getItem("jwt")) {
-      const jwt = localStorage.getItem("jwt");
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
       auth
         .checkToken(jwt)
         .then((res) => {
@@ -214,6 +214,8 @@ function App() {
             setUserEmail(res.data.email);
             setLoggedIn(true);
             history.push("/");
+          } else {
+            localStorage.removeItem(jwt);
           }
         })
         .catch((err) => console.log(err));
@@ -222,7 +224,7 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck();
-   }, []);
+  }, []);
 
   function handleLogin() {
     setLoggedIn(true);
@@ -238,75 +240,75 @@ function App() {
     setIsInfoTooltipOpen(true);
   }
 
-  function setInfotooltipText() {
-    return isSuccess
+  function getInfoTooltipText() {
+    return isSuccessTooltipStatus
       ? "Вы успешно зарегистрировались!"
       : "Что-то пошло не так! Попробуйте ещё раз";
   }
 
   return (
     <div className="page">
-			<div className="content">
-      <userContext.Provider value={currentUser}>
-        <Header loggedIn={loggedIn} email={userEmail} signOut={signOut} />
-        <Switch>
-          <ProtectedRoute exact path="/" loggedIn={loggedIn} component={Footer}>
-            <Main
-              onEditAvatar={handleEditAvatarClick}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              cards={cards}
-              onDeleteCard={handleDeleteCard}
-              onLikeCard={handleCardLike}
-            />
-            <Footer />
-            <EditProfilePopup
-              isOpen={isEditProfilePopupOpen}
-              onClose={closeAllPopups}
-              onUpdateUser={handleUpdateUser}
-            />
-            <EditAvatarPopup
-              isOpen={isEditAvatarPopupOpen}
-              onClose={closeAllPopups}
-              onUpdateAvatar={handleUpdateAvatar}
-            />
-            <AddPlacePopup
-              isOpen={isAddPlacePopupOpen}
-              onClose={closeAllPopups}
-              onAddPlace={handleAddPlaceSubmit}
-            />
-            <PopupWithForm
-              name="delete"
-              title="Вы уверены?"
-              buttonText="Да"
-            ></PopupWithForm>
-            <ImagePopup
-              card={selectedCard}
-              onClose={closeAllPopups}
-              isOpen={isImgPopupOpen}
-              onCardClick={handleCardClick}
-            />
-          </ProtectedRoute>
-          <Route exact path="/sign-up">
-            <Register onSubmit={handleRegisterSubmit} />
-          </Route>
-          <Route exact path="/sign-in">
-            <Login onSubmit={handleLoginSubmit} />
-          </Route>
-          <Route exact path="/">
-            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
-          </Route>
-        </Switch>
-        <InfoTooltip
-          isOpen={isInfoTooltipOpen}
-          onClose={closeAllPopups}
-          isSuccess={isSuccess}
-          text={setInfotooltipText()}
-        />
-      </userContext.Provider>
+      <div className="content">
+        <userContext.Provider value={currentUser}>
+          <Header loggedIn={loggedIn} email={userEmail} signOut={signOut} />
+          <Switch>
+            <ProtectedRoute exact path="/" loggedIn={loggedIn}>
+              <Main
+                onEditAvatar={handleEditAvatarClick}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onCardClick={handleCardClick}
+                cards={cards}
+                onDeleteCard={handleDeleteCard}
+                onLikeCard={handleCardLike}
+              />
+              <Footer />
+              <EditProfilePopup
+                isOpen={isEditProfilePopupOpen}
+                onClose={closeAllPopups}
+                onUpdateUser={handleUpdateUser}
+              />
+              <EditAvatarPopup
+                isOpen={isEditAvatarPopupOpen}
+                onClose={closeAllPopups}
+                onUpdateAvatar={handleUpdateAvatar}
+              />
+              <AddPlacePopup
+                isOpen={isAddPlacePopupOpen}
+                onClose={closeAllPopups}
+                onAddPlace={handleAddPlaceSubmit}
+              />
+              <PopupWithForm
+                name="delete"
+                title="Вы уверены?"
+                buttonText="Да"
+              ></PopupWithForm>
+              <ImagePopup
+                card={selectedCard}
+                onClose={closeAllPopups}
+                isOpen={isImgPopupOpen}
+                onCardClick={handleCardClick}
+              />
+            </ProtectedRoute>
+            <Route exact path="/sign-up">
+              <Register onSubmit={handleRegisterSubmit} />
+            </Route>
+            <Route exact path="/sign-in">
+              <Login onSubmit={handleLoginSubmit} />
+            </Route>
+            <Route exact path="/">
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+            </Route>
+          </Switch>
+          <InfoTooltip
+            isOpen={isInfoTooltipOpen}
+            onClose={closeAllPopups}
+            isSuccessTooltipStatus={isSuccessTooltipStatus}
+            text={getInfoTooltipText()}
+          />
+        </userContext.Provider>
+      </div>
     </div>
-		</div>
   );
 }
 
