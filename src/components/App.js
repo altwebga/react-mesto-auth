@@ -87,15 +87,10 @@ function App() {
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
-
     setIsAddPlacePopupOpen(false);
-
     setIsEditAvatarPopupOpen(false);
-
     setIsImgPopupOpen(false);
-
     setIsInfoTooltipOpen(false);
-
     setSelectedCard({});
   }
 
@@ -186,16 +181,17 @@ function App() {
       });
   }
 
-  function handleLoginSubmit({ email, password, clearInputs }) {
+  function handleLoginSubmit({ email, password }) {
     auth
       .authorize(email, password)
       .then((data) => {
         if (data.token) {
           setUserEmail(email);
           handleLogin();
-          clearInputs();
           history.push("/");
-        }
+        } else {
+					openInfoTooltip();
+				}
       })
       .catch((err) => {
         setIsSuccessTooltipStatus(false);
