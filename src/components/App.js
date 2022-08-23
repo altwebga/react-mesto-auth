@@ -22,7 +22,6 @@ import Register from "./Register";
 import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
 import avatarDefault from "../images/сousteau-min.jpg";
-import PopupConfirm from "./PopupConfirm";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -272,10 +271,6 @@ function App() {
                 onLikeCard={handleCardLike}
               />
               <Footer />
-              <PopupConfirm
-                isOpen={isOpenPopupConfirm}
-                onClose={closeAllPopups}
-              />
               <EditProfilePopup
                 isOpen={isEditProfilePopupOpen}
                 onClose={closeAllPopups}
