@@ -1,11 +1,13 @@
-import close from "../images/popup/icon-close.svg";
+import close from "../images/icon-close.svg";
+import PopupWithForm from './PopupWithForm';
 
 const PopupConfirm = ({ isOpen, onClose, container }) => {
   return (
-    <div
-      className={
-        isOpen ? `popup popup_confirm popup_opened` : `popup popup_confirm`
-      }
+    <PopupWithForm
+      buttonText="Сохранить"
+      onSubmit={() => console.log("onSubmit")}
+      isOpen={isOpen}
+      onClose={onClose}
     >
       <form id="form_remove" className={container}>
         <h2 className="popup__title">Вы Уверены?</h2>
@@ -21,7 +23,7 @@ const PopupConfirm = ({ isOpen, onClose, container }) => {
         className="popup__closed"
         onClick={onClose}
       ></button>
-    </div>
+    </PopupWithForm>
   );
 };
 

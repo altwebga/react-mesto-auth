@@ -22,6 +22,7 @@ import Register from "./Register";
 import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
 import avatarDefault from "../images/сousteau-min.jpg";
+import PopupConfirm from "./PopupConfirm";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -30,7 +31,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
-  const [isSuccessTooltipStatus, setIsSuccessTooltipStatus] = useState();
+  const [isSuccessTooltipStatus, setIsSuccessTooltipStatus] = useState(false);
+  const [isOpenPopupConfirm, setIsOpenPopupConfirm] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [userEmail, setUserEmail] = useState("");
   const [currentUser, setCurrentUser] = useState({
@@ -132,6 +134,7 @@ function App() {
     api
       .deleteCard(card._id)
       .then(() => {
+        openPopupConfirm();
         setCards((state) => state.filter((c) => c._id !== card._id));
       })
       .catch((err) => {
@@ -170,9 +173,15 @@ function App() {
     auth
       .register(email, password)
       .then((res) => {
-        setIsSuccessTooltipStatus(true);
-        openInfoTooltip();
-        history.push("/sign-in");
+        if (res.data) {
+          setIsSuccessTooltipStatus(true);
+          openInfoTooltip();
+          history.push("/sign-in");
+          /* handleLoginSubmit({ email, password }); */
+        }
+        else {
+          throw new Error("Данные от сервера получены некорректно.");
+        }
       })
       .catch((err) => {
         setIsSuccessTooltipStatus(false);
@@ -190,7 +199,7 @@ function App() {
           handleLogin();
           history.push("/");
         } else {
-					openInfoTooltip();
+          throw new Error("Ошибка во время авторизации.");
 				}
       })
       .catch((err) => {
@@ -211,7 +220,7 @@ function App() {
             setLoggedIn(true);
             history.push("/");
           } else {
-            localStorage.removeItem(jwt);
+            localStorage.removeItem("jwt");
           }
         })
         .catch((err) => console.log(err));
@@ -234,6 +243,10 @@ function App() {
 
   function openInfoTooltip() {
     setIsInfoTooltipOpen(true);
+  }
+
+  function openPopupConfirm() {
+    setIsOpenPopupConfirm(true);
   }
 
   function getInfoTooltipText() {
@@ -259,6 +272,10 @@ function App() {
                 onLikeCard={handleCardLike}
               />
               <Footer />
+              <PopupConfirm
+                isOpen={isOpenPopupConfirm}
+                onClose={closeAllPopups}
+              />
               <EditProfilePopup
                 isOpen={isEditProfilePopupOpen}
                 onClose={closeAllPopups}
