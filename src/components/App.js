@@ -31,7 +31,6 @@ function App() {
   const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isSuccessTooltipStatus, setIsSuccessTooltipStatus] = useState(false);
-  const [isOpenPopupConfirm, setIsOpenPopupConfirm] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [userEmail, setUserEmail] = useState("");
   const [currentUser, setCurrentUser] = useState({
@@ -133,7 +132,6 @@ function App() {
     api
       .deleteCard(card._id)
       .then(() => {
-        openPopupConfirm();
         setCards((state) => state.filter((c) => c._id !== card._id));
       })
       .catch((err) => {
@@ -176,10 +174,8 @@ function App() {
           setIsSuccessTooltipStatus(true);
           openInfoTooltip();
           history.push("/sign-in");
-          /* handleLoginSubmit({ email, password }); */
-        }
-        else {
-          throw new Error("Данные от сервера получены некорректно.");
+        } else {
+          throw new Error("Данные, отправленные на сервер, некорректны");
         }
       })
       .catch((err) => {
@@ -199,7 +195,7 @@ function App() {
           history.push("/");
         } else {
           throw new Error("Ошибка во время авторизации.");
-				}
+        }
       })
       .catch((err) => {
         setIsSuccessTooltipStatus(false);
@@ -242,10 +238,6 @@ function App() {
 
   function openInfoTooltip() {
     setIsInfoTooltipOpen(true);
-  }
-
-  function openPopupConfirm() {
-    setIsOpenPopupConfirm(true);
   }
 
   function getInfoTooltipText() {
